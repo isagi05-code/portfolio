@@ -1,0 +1,62 @@
+:root {
+  --bg: #0a0a0a;
+  --gold: #F5A623;
+  --gold-dim: rgba(245, 166, 35, 0.18);
+  --gold-border: rgba(245, 166, 35, 0.18);
+  --gold-glow: rgba(245, 166, 35, 0.4);
+  --gold-pill-bg: rgba(245, 166, 35, 0.08);
+  --gold-pill-border: rgba(245, 166, 35, 0.2);
+  --card-bg: rgba(30, 25, 20, 0.75);
+  --card-border: rgba(245, 166, 35, 0.18);
+  --text-primary: #f0ece4;
+  --text-muted: #9a8c7a;
+  --font-heading: 'Syne', sans-serif;
+  --font-body: 'DM Mono', monospace;
+  --nav-bg: rgba(20, 16, 10, 0.85);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 166, 35, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 166, 35, 0.45);
+}
+
+::selection {
+  background: rgba(245, 166, 35, 0.3);
+  color: var(--text-primary);
+}
