@@ -44,6 +44,16 @@ const cardHover = {
   transition: { duration: 0.25 },
 };
 
+function useMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return isMobile;
+}
+
 /* ━━━━━━━━━━━━━━━━━━━━ MUSIC TOGGLE ━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 function MusicPlayer() {
@@ -638,6 +648,7 @@ const navTabs = [
 /* ━━━━━━━━━━━━━━━━━━━━ COMPONENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 export function MainPortfolio() {
+  const isMobile = useMobile();
   const [roleIndex, setRoleIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('home');
   const heroRef = useRef(null);
@@ -710,41 +721,44 @@ export function MainPortfolio() {
       />
 
       {/* ── Navbar ── */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(16px)', background: 'rgba(10,10,10,0.75)' }}
-      >
-        <div style={{ ...s.container, ...s.nav, justifyContent: 'flex-end' }}>
-          <nav>
-            <ul style={s.navLinks}>
-              {['About', 'Skills', 'Projects', 'Contact'].map((link) => (
-                <li key={link}>
-                  <motion.button
-                    style={s.navLink}
-                    whileHover={{ color: '#F5A623' }}
-                    onClick={() => scrollTo(`#${link.toLowerCase()}`)}
-                  >
-                    {link}
-                  </motion.button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </motion.div>
+      {!isMobile && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(16px)', background: 'rgba(10,10,10,0.75)' }}
+        >
+          <div style={{ ...s.container, ...s.nav, justifyContent: 'flex-end' }}>
+            <nav>
+              <ul style={s.navLinks}>
+                {['About', 'Skills', 'Projects', 'Contact'].map((link) => (
+                  <li key={link}>
+                    <motion.button
+                      style={s.navLink}
+                      whileHover={{ color: '#F5A623' }}
+                      onClick={() => scrollTo(`#${link.toLowerCase()}`)}
+                    >
+                      {link}
+                    </motion.button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </motion.div>
+      )}
 
       {/* ══════════════════════ HERO ══════════════════════ */}
-      <div style={s.container}>
-        <section id="home" style={s.heroSection} ref={heroRef}>
+      <div style={{ ...s.container, paddingTop: isMobile ? '40px' : '0' }}>
+        <section id="home" style={{ ...s.heroSection, flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '20px' : '0' }} ref={heroRef}>
           <motion.div
             style={{
               ...s.glassCard,
               position: 'relative',
               overflow: 'hidden',
-              minHeight: 'clamp(420px, 50vw, 540px)',
+              minHeight: isMobile ? 'auto' : 'clamp(420px, 50vw, 540px)',
               padding: 0,
+              width: '100%',
             }}
             variants={fadeUp}
             initial="hidden"
@@ -753,11 +767,11 @@ export function MainPortfolio() {
             {/* ── Background photo (right side, blended) ── */}
             <motion.div
               style={{
-                position: 'absolute',
+                position: isMobile ? 'relative' : 'absolute',
                 top: 0,
                 right: 0,
-                width: '55%',
-                height: '100%',
+                width: isMobile ? '100%' : '55%',
+                height: isMobile ? '350px' : '100%',
                 zIndex: 1,
               }}
               initial={{ opacity: 0, x: 40 }}
@@ -776,14 +790,7 @@ export function MainPortfolio() {
                   filter: 'brightness(0.7) contrast(1.15) saturate(0.8)',
                 }}
               />
-              {/* Gradient overlay: left fade — strong */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to right, rgba(20,16,10,1) 0%, rgba(20,16,10,0.95) 20%, rgba(20,16,10,0.7) 40%, rgba(20,16,10,0.3) 60%, transparent 85%)',
-                pointerEvents: 'none',
-              }} />
-              {/* Gradient overlay: bottom fade — strong */}
+              {/* Gradient overlay: bottom fade */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -798,33 +805,29 @@ export function MainPortfolio() {
                 pointerEvents: 'none',
               }} />
               {/* Warm amber cinematic tint */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'radial-gradient(ellipse at 65% 35%, rgba(220,130,20,0.12), transparent 65%)',
-                pointerEvents: 'none',
-              }} />
-              {/* Right edge vignette */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to left, rgba(20,16,10,0.5) 0%, transparent 20%)',
-                pointerEvents: 'none',
-              }} />
+              {!isMobile && (
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'radial-gradient(ellipse at 65% 35%, rgba(220,130,20,0.12), transparent 65%)',
+                  pointerEvents: 'none',
+                }} />
+              )}
             </motion.div>
 
-            {/* ── Text content (left side, above photo) ── */}
+            {/* ── Text content ── */}
             <div style={{
               position: 'relative',
               zIndex: 2,
-              padding: 'clamp(28px, 4vw, 48px)',
+              padding: isMobile ? '32px 24px' : 'clamp(28px, 4vw, 48px)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              minHeight: 'clamp(420px, 50vw, 540px)',
+              minHeight: isMobile ? '400px' : 'clamp(420px, 50vw, 540px)',
+              width: isMobile ? '100%' : '60%',
             }}>
               {/* top row */}
-              <div style={s.heroTopRow}>
+              <div style={{ ...s.heroTopRow, justifyContent: isMobile ? 'center' : 'space-between', flexWrap: 'wrap', gap: '16px' }}>
                 <div style={s.openToWork}>
                   <motion.div
                     style={s.greenDot}

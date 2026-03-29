@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+
+function useMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return isMobile;
+}
 
 const s = {
   page: {
@@ -146,6 +156,7 @@ const fadeUp = {
 };
 
 export default function BotMind() {
+  const isMobile = useMobile();
   return (
     <div style={s.page}>
       <motion.div
@@ -155,8 +166,8 @@ export default function BotMind() {
       />
       <div style={s.orbSecondary} />
 
-      <Link to="/" style={s.backButton}>
-        <motion.span whileHover={{ x: -2 }}>←</motion.span> Back Home
+      <Link to="/" style={{ ...s.backButton, left: isMobile ? '16px' : '24px', top: isMobile ? '16px' : '24px' }}>
+        <motion.span whileHover={{ x: -2 }}>←</motion.span> {!isMobile && 'Back Home'}
       </Link>
 
       <div style={s.container}>
@@ -212,7 +223,7 @@ export default function BotMind() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div style={{ order: window.innerWidth > 768 ? 2 : 1 }}>
+          <div style={{ order: isMobile ? 1 : 2 }}>
             <div style={{ ...s.badge, background: 'rgba(251,146,60,0.1)', color: '#fb923c' }}>Smart Travel Planner</div>
             <h2 style={s.appTitle}>Yatra.ai</h2>
             <p style={s.appDesc}>
@@ -226,7 +237,7 @@ export default function BotMind() {
               <div style={s.featItem}>🌦️ Weather Aware</div>
             </div>
           </div>
-          <div style={{ ...s.mockPhone, order: window.innerWidth > 768 ? 1 : 2 }}>
+          <div style={{ ...s.mockPhone, order: isMobile ? 2 : 1 }}>
             <div style={{ padding: '20px', background: '#1a1a1a', height: '100%' }}>
               <div style={{ ...s.chatBubble, background: '#fb923c', color: '#111', alignSelf: 'flex-end', marginLeft: 'auto', borderBottomRightRadius: 4 }}>
                 Plan a 3-day trip to Manali.

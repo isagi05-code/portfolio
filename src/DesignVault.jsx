@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+
+function useMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return isMobile;
+}
 
 const s = {
   page: {
@@ -79,11 +89,9 @@ const s = {
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-    gap: '24px',
-    position: 'relative',
     zIndex: 1,
     paddingBottom: '40px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
   },
   sectionTitle: {
     fontFamily: "'Syne', sans-serif",
@@ -156,6 +164,7 @@ const fadeUp = {
 };
 
 export default function DesignVault() {
+  const isMobile = useMobile();
   return (
     <div style={s.page}>
       <motion.div
@@ -169,8 +178,8 @@ export default function DesignVault() {
         transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <Link to="/" style={s.backButton}>
-        <motion.span whileHover={{ x: -3 }}>←</motion.span> Back Home
+      <Link to="/" style={{ ...s.backButton, left: isMobile ? '16px' : '24px', top: isMobile ? '16px' : '24px' }}>
+        <motion.span whileHover={{ x: -3 }}>←</motion.span> {!isMobile && 'Back Home'}
       </Link>
 
       <div style={s.container}>
