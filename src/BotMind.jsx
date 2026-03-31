@@ -186,7 +186,7 @@ export default function BotMind() {
         >
           <div>
             <div style={{ ...s.badge, background: 'rgba(74,222,128,0.1)', color: '#4ade80' }}>AI Nutritionist</div>
-            <h2 style={s.appTitle}>Dr. Health</h2>
+            <h2 style={s.appTitle}><a href="https://dr-health-o2eh.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Dr. Health</a></h2>
             <p style={s.appDesc}>
               A personal artificial intelligence nutrition coach. Dr. Health analyzes your body metrics, 
               dietary preferences, and goals to build a scientifically-backed nutrition roadmap.

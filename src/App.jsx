@@ -263,7 +263,7 @@ const s = {
   heroName: {
     fontFamily: "'Syne', sans-serif",
     fontWeight: 800,
-    fontSize: 'clamp(32px, 5vw, 56px)',
+    fontSize: 'clamp(28px, 4.2vw, 52px)',
     lineHeight: 1.1,
     color: '#F5A623',
     marginBottom: '16px',
@@ -693,7 +693,7 @@ export function MainPortfolio() {
   // Split text into animated letters
   const AnimatedName = ({ text }) => (
     <motion.div
-      style={{ display: 'flex', overflow: 'hidden' }}
+      style={{ display: 'flex', overflow: 'visible' }}
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
@@ -779,7 +779,7 @@ export function MainPortfolio() {
               transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <img
-                src="/yugal1.jpg"
+                src="/yugal1.jpeg"
                 alt="Yugal Chaudhari"
                 style={{
                   width: '100%',
@@ -848,7 +848,7 @@ export function MainPortfolio() {
               </div>
 
               {/* middle: name + subtitle */}
-              <div style={{ maxWidth: '60%' }}>
+              <div>
                 <motion.div style={{ ...s.heroName, y: heroY }}>
                   <AnimatedName text="YUGAL" />
                   <AnimatedName text="CHAUDHARI" />
