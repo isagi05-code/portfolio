@@ -152,6 +152,12 @@ const webData = [
     src: '/chocolate_ui.png',
     url: 'https://chocolate-web-five.vercel.app/',
   },
+  {
+    title: 'Qutrium Intelligence',
+    desc: 'A quantum-native intelligence platform designed to neutralize cyber threats through post-quantum architecture and safety-by-design principles.',
+    src: '/qutrium_ui.png',
+    url: 'https://qutrium.vercel.app/',
+  },
 ];
 
 const fadeUp = {

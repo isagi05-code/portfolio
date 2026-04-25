@@ -225,7 +225,7 @@ export default function BotMind() {
         >
           <div style={{ order: isMobile ? 1 : 2 }}>
             <div style={{ ...s.badge, background: 'rgba(251,146,60,0.1)', color: '#fb923c' }}>Smart Travel Planner</div>
-            <h2 style={s.appTitle}>Yatra.ai</h2>
+            <h2 style={s.appTitle}><a href="https://yatra-ai.onrender.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>Yatra.ai</a></h2>
             <p style={s.appDesc}>
               Your ultimate travel companion. Yatra.ai crafts minute-by-minute itineraries for any 
               destination, considering weather, local events, and your specific travel style.
